@@ -1,0 +1,51 @@
+[merge]
+	tool = kdiff3
+	conflictstyle = diff3
+[mergetool "kdiff3"]
+	path = C:/Program Files (x86)/KDiff3/kdiff3.exe
+[diff]
+	guitool = kdiff3
+[difftool "kdiff3"]
+	path = C:/Program Files (x86)/KDiff3/kdiff3.exe
+	cmd = \"C:/Program Files (x86)/KDiff3/kdiff3.exe\" \"$LOCAL\" \"$REMOTE\"
+[difftool "code"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[core]
+	editor = \"C:/Program Files (x86)/Vim/vim81/gvim.exe\"
+	eol = crlf
+[user]
+	name = Alexander Holland-Moritz
+	email = ahm@labcognition.com
+[alias]
+	map = "!f() { for i in */; do (cd $i; git rev-parse 2> /dev/null || continue; echo --------------------; echo ${i}; echo --------------------; git ${@}); done }; f"
+	pu = push
+	am = commit --amend
+	co = commit -a -m
+	tc = commit -a -m 'temp'
+	ad = add .
+	ff = merge --ff-only
+	st = status --short --branch
+	wip = !git add -A && git commit -a -m 'wip'
+	fu = !git add -A && git commit -a -m 'fixup! wip'
+	au = rebase --interactive --autosquash
+	cx = !git add *.cs *.xaml *.csproj && git commit -m 'code cleanup' && :
+	sshow = "!f() { git stash show stash^{/$*} -p; }; f"
+	sapply = "!f() { git stash apply stash^{/$*}; }; f"
+	sbin = "!f() { git stash apply stash^{/bin}; }; f"
+	assumeall = !git status -s | awk {'print $2'} | xargs git assume
+	export = "!f() { git bundle create $(date -u +%Y-%m-%dT%H%M%SZ).bundle ${1-@\\{u\\}..HEAD}; }; f"
+	xbak = "!f() { git bundle create $(date -u +%Y-%m-%dT%H%M%SZ).bundle ${1-@\\{u\\}..HEAD} && cp 201*.bundle /z/Backup/AHM/ && rm 201*.bundle; }; f"
+[rerere]
+	enabled = true
+[include]
+	path = .gitconfig-lc
+[pull]
+	rebase = false
+[fetch]
+	prune = false
+[rebase]
+	autoStash = false
+[difftool "vimdiff"]
+	path = c:/msys64/usr/bin/vimdiff.exe
+[mergetool]
+	keepBackup = false
